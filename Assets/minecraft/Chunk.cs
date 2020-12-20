@@ -7,13 +7,13 @@ public class Chunk {
 	MeshRenderer meshRenderer;
 	MeshFilter meshFilter;
     GameObject chunkObject;
-
+	MeshCollider meshCollider;
 	int vertexIndex = 0;
 	List<Vector3> vertices = new List<Vector3> ();
 	List<int> triangles = new List<int> ();
 	List<Vector2> uvs = new List<Vector2> ();
 
-	byte[,,] voxelMap = new byte[VoxelData.ChunkWidth, VoxelData.ChunkHeight, VoxelData.ChunkWidth];
+	public byte[,,] voxelMap = new byte[VoxelData.ChunkWidth, VoxelData.ChunkHeight, VoxelData.ChunkWidth];
 
     World world;
 
@@ -25,6 +25,7 @@ public class Chunk {
 
         meshRenderer = chunkObject.AddComponent<MeshRenderer>();
         meshFilter = chunkObject.AddComponent<MeshFilter>();
+		meshCollider=chunkObject.AddComponent<MeshCollider>();
         world = _world;
 
         chunkObject.transform.SetParent(world.transform);
@@ -36,6 +37,7 @@ public class Chunk {
         CreateMeshData();
         CreateMesh();
 
+		meshCollider.sharedMesh=meshFilter.mesh;
     }
 
     public bool isActive {
